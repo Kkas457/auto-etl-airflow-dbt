@@ -1,14 +1,35 @@
 version: 2
 
 models:
-  - name: stg_customers
+  - name: d_stg_customers
+    depends_on:
+      - ref: stg_order
+      - ref: stg_payment
+    config:
+        meta:
+          owner: team_a
+          update_type: 'INST'
+          schedule_interval: '30 23 * * *'
+          schema: 'postgres'
+          table_name: 'stg_customers'
+    description: '{{ doc("__overview_v2__") }}'
     columns:
       - name: customer_id
         tests:
           - unique
           - not_null
 
-  - name: stg_orders
+  - name: d_stg_orders
+    depends_on:
+      - ref: stg_order
+    config:
+        meta:
+          owner: team_b
+          update_type: 'INST'
+          schedule_interval: '30 23 * * *'
+          schema: 'postgres'
+          table_name: 'stg_orders'
+    description: '{{ doc("__overview_v2__") }}'
     columns:
       - name: order_id
         tests:
@@ -19,7 +40,17 @@ models:
           - accepted_values:
               values: ['placed', 'shipped', 'completed', 'return_pending', 'returned']
 
-  - name: stg_payments
+  - name: d_stg_payments
+    depends_on:
+      - ref: stg_order
+    config:
+        meta:
+          owner: team_c
+          update_type: 'INST'
+          schedule_interval: '30 23 * * *'
+          schema: 'postgres'
+          table_name: 'stg_payments'
+    description: '{{ doc("__overview_v2__") }}'
     columns:
       - name: payment_id
         tests:

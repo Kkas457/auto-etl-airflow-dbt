@@ -1,0 +1,38 @@
+version: 2
+
+sources:
+  - name: jaffle_shop
+    database: raw
+    schema: public
+    description: >
+      This is the raw data from our Jaffle Shop application.
+    tables:
+      - name: customers
+        description: >
+          Information about our customers.
+        columns:
+          - name: id
+            description: The customer's unique identifier.
+            tests:
+              - unique
+              - not_null
+          - name: first_name
+            description: The customer's first name.
+          - name: last_name
+            description: The customer's last name.
+      - name: orders
+        description: >
+          Details about customer orders.
+        columns:
+          - name: id
+            description: The order's unique identifier.
+            tests:
+              - unique
+              - not_null
+          - name: customer_id
+            description: Foreign key referencing the customers table.
+            tests:
+              - not_null
+              - relationships:
+                  to: ref('customers')
+                  field: id

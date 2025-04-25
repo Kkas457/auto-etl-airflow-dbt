@@ -1,12 +1,24 @@
+# jaffle_shop:
+#   outputs:
+#     dev:
+#       type: postgres
+#       threads: 1
+#       host: postgres
+#       port: 5432
+#       user: postgres
+#       pass: postgres
+#       dbname: postgres
+#       schema: postgres
+#   target: dev
 jaffle_shop:
   outputs:
     dev:
-      type: postgres
+      type: clickhouse
       threads: 1
-      host: "{{ env_var('DBT_HOST') }}"
-      port: "{{ env_var('DBT_PORT') | as_number }}"
-      user: "{{ env_var('DBT_USER') }}"
-      pass: "{{ env_var('DBT_ENV_SECRET_PASSWORD') }}"
-      dbname: postgres
-      schema: "{{ env_var('DBT_SCHEMA', 'public') }}"
+      host: clickhouse
+      port: 8123
+      user: admin
+      password: admin
+      dbname: default
+      schema: default
   target: dev

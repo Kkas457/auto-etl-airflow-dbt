@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: stg_customers
+    depends_on:
+      - stg_orders
+      - stg_payments
+    config:
+        meta:
+          dag_id: bussiness_flow
+          dag_structure_version: v3
+          owner: team_b
+          update_type: 'INST'
+          schedule_interval: '*/5 * * * *'
+          schema: 'postgres'
+          table_name: 'stg_customers'
+    description: '{{ doc("__overview_v2__") }}'
+    columns:
+      - name: customer_id
+        tests:
+          - unique
+          - not_null
+

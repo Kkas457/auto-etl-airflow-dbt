@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: stg_payments
+    depends_on:
+      - stg_orders
+    config:
+        meta:
+          dag_structure_version: v2
+          owner: team_c
+          update_type: 'INST'
+          schedule_interval: '*/5 * * * *'
+          schema: 'postgres'
+          table_name: 'stg_payments'
+    description: '{{ doc("__overview_v2__") }}'
+    columns:
+      - name: payment_id
+        tests:
+          - unique
+          - not_null
+      - name: payment_method
+        tests:
+          - accepted_values:
+              values: ['credit_card', 'coupon', 'bank_transfer', 'gift_card']
+
