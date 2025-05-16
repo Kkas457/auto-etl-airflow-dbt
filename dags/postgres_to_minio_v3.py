@@ -1,6 +1,6 @@
 from airflow import DAG
 from datetime import datetime
-from include.postgres_to_minio import PostgresToMinioParquetOperator  
+from include.db_to_minio import DatabaseToMinioParquetOperator  
 
 default_args = {
     "owner": "airflow",
@@ -20,7 +20,7 @@ with DAG(
 ) as dag:
 
     # Insert example
-    insert_task = PostgresToMinioParquetOperator(
+    insert_task = DatabaseToMinioParquetOperator(
         task_id="insert_task",
         postgres_conn_id="postgres",
         source_table="my_test_table",
@@ -37,7 +37,7 @@ with DAG(
     )
 
     # Insert_Update example
-    insert_update_full_task = PostgresToMinioParquetOperator(
+    insert_update_full_task = DatabaseToMinioParquetOperator(
         task_id="insert_update_full_task",
         postgres_conn_id="postgres",
         source_table="my_test_table",
@@ -54,7 +54,7 @@ with DAG(
     )
 
     # Insert_Update_Delete example
-    insert_update_delete_task = PostgresToMinioParquetOperator(
+    insert_update_delete_task = DatabaseToMinioParquetOperator(
         task_id="insert_update_delete_task",
         postgres_conn_id="postgres",
         source_table="my_test_table",
